@@ -2,11 +2,22 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
+
 class Formular extends BaseController
 {
-    public function __construct()
+    public $ionAuth;
+
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
-        helper('form'); // load once so set_value() and csrf_field() are available in views
+        // call parent first
+        parent::initController($request, $response, $logger);
+
+        // helpers and libraries
+        helper('form'); // for set_value(), csrf_field(), etc.
+        $this->ionAuth = new \IonAuth\Libraries\IonAuth();
     }
 
     public function index(): string
@@ -16,24 +27,22 @@ class Formular extends BaseController
 
     public function prihlaseni()
     {
-        // show the form (no data on first load)
+        // show the form
         return view('login/prihlaseni');
     }
 
     public function prihlaseniPost()
     {
-    
-
-        // co získáme uložíme jako proměnné
-        $login = $this->request->getPost('login');
+        $login    = $this->request->getPost('login');
         $password = $this->request->getPost('password');
 
-        // zobrazit
-     // var_dump($login, $password);
+        $logged = $this->ionAuth->login($login, $password);
 
-        return view('login/prihlaseni', [
-            'login'    => $login,
-            'password' => $password,
-        ]);
+        if ($logged) {
+            return redirect()->to(site_url('formular/index'));
+        } else {
+            session()->setFlashdata('login_error', 'Neplatné přihlašovací údaje.');
+            return redirect()->to(site_url('formular/prihlaseni'));
+        }
     }
 }
