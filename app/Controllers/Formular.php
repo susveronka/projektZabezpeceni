@@ -39,10 +39,9 @@ class Formular extends BaseController
         $logged = $this->ionAuth->login($login, $password);
 
         if ($logged) {
-            return redirect()->to(site_url('formular/index'));
+            return redirect()->to(site_url('admin/index'));
         } else {
-            session()->setFlashdata('login_error', 'Neplatné přihlašovací údaje.');
-            return redirect()->to(site_url('formular/prihlaseni'));
+            return redirect()->to(site_url('login/prihlaseni'));
         }
     }
 }

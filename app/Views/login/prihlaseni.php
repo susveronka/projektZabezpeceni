@@ -13,9 +13,9 @@
 </head>
 <body>
     <main class="container py-5">
-        <h1 class="mb-4">Formulář</h1>
+        <h1 class="mb-4">Přihlásit se</h1>
 
-            <form method="post" action="<?= site_url('formular/prihlaseniPost') ?>">
+            <form method="post" action="<?= site_url('login/prihlaseniPost') ?>">
                 <?= csrf_field() ?>
                 <div class="row g-3">
                  <div class="input-group mb-3">

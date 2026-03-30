@@ -43,3 +43,5 @@ abstract class BaseController extends Controller
         // $this->session = service('session');
     }
 }
+// username: admin@admin.com
+// password: password
