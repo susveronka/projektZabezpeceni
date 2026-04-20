@@ -7,9 +7,9 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Formular::prihlaseni');
 $routes->get('login/prihlaseni', 'Formular::prihlaseni');
-$routes->post('login/prihlaseniPost', 'Formular::prihlaseniPost');
+$routes->post('login/loginFinish', 'Formular::loginFinish');
 
-$routes->group('admin', ['filter' => 'login'] , static function ($routes){
+$routes->group('admin', ['filter' => 'prihlaseni'] , static function ($routes){
 $routes->get('index', 'Admin::index');
 
 });

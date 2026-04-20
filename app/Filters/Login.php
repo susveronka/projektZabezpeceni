@@ -7,6 +7,8 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use IonAuth\Libraries\IonAuth;
 use App\Libraries\Alert;
+use Stdclass;
+use Config\Config;
 
 class Login implements FilterInterface
 {
@@ -31,13 +33,14 @@ class Login implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
+        $this->config = new Config();
         $this->ionAuth = new IonAuth();
-        $this->session = \Config\Services::session();
         $this->alert = new Alert();
+        
         if (!$this->ionAuth->loggedIn()) {
-            $alert = $this->alert->makeMessage(false, 'filter');
-            $this->session->setFlashdata('alert', $alert);
-            return redirect()->route('prihlaseni');
+            $alertObject = new stdClass();
+            $alertObject->text = $this->config->errorMessages['filterDanger'];
+            return redirect()->route('prihlaseni')->with('alert', $alertObject);
        }
     }
 

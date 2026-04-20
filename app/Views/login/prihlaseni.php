@@ -6,16 +6,22 @@
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-      <link href=" node_modules\@fortawesome\fontawesome-free\css\all.min.css" rel="stylesheet" />
+      <link href="node_modules\@fortawesome\fontawesome-free\css\all.min.css" rel="stylesheet" />
     
     
 
 </head>
 <body>
     <main class="container py-5">
+        <?php
+if (isset($alert)) {
+    $this->include('layout/alert');
+}
+    ?>
+           
         <h1 class="mb-4">Přihlásit se</h1>
 
-            <form method="post" action="<?= site_url('login/prihlaseniPost') ?>">
+            <form method="post" action="<?= site_url('login/loginFinish') ?>">
                 <?= csrf_field() ?>
                 <div class="row g-3">
                  <div class="input-group mb-3">
